@@ -2,19 +2,19 @@ import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Base64 } from "js-base64";
 
-function DecodeBase64({ someValue }, {getResult}) {
-  console.log("radioText: " + { someValue });
+function DecodeBase64({someValue, getResult}) {
+  console.log("radioText: " + someValue );
   // const [inputValue, setInputValue] = useState("");
   const [resultValue, setResultValue] = useState("");
 
   const handleInputChange = (e) => {
-    console.log("radioText: " + { someValue });
+    console.log("radioText: " + someValue );
     try {
       const decodedValue = Base64.decode(e.currentTarget.value);
       setResultValue(decodedValue);
       getResult(decodedValue);
     } catch (error) {
-      console.log("Fehler: " + { error });
+      console.log("Fehler: " +  error );
     }
   }
 

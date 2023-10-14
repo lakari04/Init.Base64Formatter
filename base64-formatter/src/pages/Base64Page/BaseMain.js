@@ -61,9 +61,9 @@ let getResult = (result) => {
       </Form.Group>
       <div>
         {radioValue === "0" ? (
-          <DecodeBase64 someValue={{radioText}, getResult={getResult}} />
+          <DecodeBase64 someValue={{radioText}} getResult={getResult} />
         ) : (
-          <EncodeBase64 someValue={{radioText}, getResult={getResult}} />
+          <EncodeBase64 someValue={{radioText}} getResult={getResult} />
         )}
       </div>
       <div style={{ padding: 20 }}>
