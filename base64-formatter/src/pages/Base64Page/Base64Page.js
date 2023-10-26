@@ -1,70 +1,45 @@
-import Button from "react-bootstrap/Button";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Form from "react-bootstrap/Form";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ToggleButton from "react-bootstrap/ToggleButton";
-import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
-import { Base64 } from "js-base64";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import DecodeBase64 from "../../components/DecodeBase64";
+import EncodeBase64 from "../../components/EncodeBase64";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import Button from "react-bootstrap/Button";
 
 function Base64Page() {
-  const [isChecked, setisChecked] = useState(false);
-
-  const [radioValue, setRadioValue] = useState("1");
+  const [radioValue, setRadioValue] = useState("0");
   const [radioText, setRadioText] = useState("Decode");
-  let decodeInput = (text) => {};
-
-  const [inputValue, setInputValue] = useState("");
   const [resultValue, setResultValue] = useState("");
-
   const radios = [
-    { name: "Decode", value: "1" },
-    { name: "Encode", value: "2" },
+    { name: "Decode", value: "0" },
+    { name: "Encode", value: "1" },
   ];
 
-  const [state, setState] = useState(false);
-// useEffect(() => {
-//   if({radioText.name} === "Decode"){
-//     console.log("Decode" + {radioText.name})
-//   }
-//   if({radioText.name} === "Encode"){
-//     console.log("Encode" + {radioText.name})
-//   }
+  //callback function
+let getResult = (result) => {
+  setResultValue(result);
+}
 
-//   return () => {
-//   }
-// }, [radioValue])
-
-  const handleInputChange = (e) => {
-
-    console.log("length:" + e.currentTarget.value.length);
-    console.log("length Exceeded:" + e.currentTarget.value.length === 0);
-
-    console.log("isChecked: " + {isChecked} );
-    console.log("radioValue: " + {radioValue} );
-    console.log("radioText: " + {radioText} );
-    setResultValue(Base64.encode(e.currentTarget.value));
-  };
-
-  const handleRadioChange= (e) => {
-    
+  const handleRadioChange = (e) => {
     setRadioValue(e.currentTarget.value);
     setRadioText(e.currentTarget.name);
   };
 
   return (
     <>
-      <Form.Group>
+      <Form.Group data-testid="base64page-form" style={{ top: 0 }}>
         <ButtonGroup>
           {radios.map((radio, idx) => (
             <ToggleButton
+              data-testid={`toggle-button-${idx}`}
               key={idx}
               id={`radio-${idx}`}
               type="radio"
               variant={idx % 2 ? "outline-success" : "outline-success"}
-              name={radio.name}
+              name="radio"
               value={radio.value}
-              isChecked={radioValue === radio.value}
+              checked={radioValue === radio.value}
               onChange={handleRadioChange}
             >
               {radio.name}
@@ -72,30 +47,20 @@ function Base64Page() {
           ))}
         </ButtonGroup>
       </Form.Group>
-      <Form.Group>
-        <Form.Label>{radioText}</Form.Label>
-        <Form.Control
-          as="textarea"
-          rows={8}
-          placeholder="Type or paste here..."
-          onChange={handleInputChange}
-        />
-        <Form.Label>{radioText}d result</Form.Label>
-        <Form.Control as="textarea" rows={8} value={resultValue}>
-          {" "}
-        </Form.Control>
-      </Form.Group>
+      <div>
+        {radioValue === "0" ? (
+          <DecodeBase64 someValue={{radioText}} getResult={getResult} />
+        ) : (
+          <EncodeBase64 someValue={{radioText}} getResult={getResult} />
+        )}
+      </div>
       <div style={{ padding: 20 }}>
-        <CopyToClipboard
-          text={resultValue}
-          onCopy={() => setState(true)}
-        >
-          <Button>
-            Copy to clipboard
-          </Button>
+        <CopyToClipboard text={resultValue}>
+          <Button>Copy to clipboard</Button>
         </CopyToClipboard>
       </div>
     </>
   );
 }
+
 export default Base64Page;

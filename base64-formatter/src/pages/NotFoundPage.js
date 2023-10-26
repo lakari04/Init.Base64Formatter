@@ -3,7 +3,7 @@ export default function NotFoundPage() {
     <>
       <div className="App-main">
         <h1>Ups....!</h1>
-        <p>Diese Seite existiert leider nicht-Sorry!</p>
+        <p>This page doesn't seem to exist!</p>
       </div>
     </>
   );

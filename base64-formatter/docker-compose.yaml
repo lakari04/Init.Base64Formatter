@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: base64-formatter-nginx
+    image: base64-nginx:latest
+    build:
+      context: .
+    ports:
+      - 3000:80

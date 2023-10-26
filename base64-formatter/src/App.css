@@ -46,7 +46,11 @@ Button{
 }
 
 .form-control {
-  width: 50vw;
+  width: 50vw;  
+  height: 25vh;
+}
+.logo{
+  width: 10%;
 }
 
 @keyframes App-logo-spin {
